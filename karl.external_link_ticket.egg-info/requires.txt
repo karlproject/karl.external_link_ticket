@@ -1,0 +1,4 @@
+setuptools
+karl
+repoze.session
+repoze.browserid

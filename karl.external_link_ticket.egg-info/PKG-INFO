@@ -1,0 +1,19 @@
+Metadata-Version: 1.0
+Name: karl.external-link-ticket
+Version: 0.1
+Summary: Content types for KARL
+Home-page: http://launchpad.net/~teamkarl
+Author: Open Society Institute
+Author-email: osi-dev@lists.palladion.com
+License: GPL
+Description: 
+        
+        
+Keywords: web wsgi karl
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Topic :: Internet :: WWW/HTTP :: WSGI
