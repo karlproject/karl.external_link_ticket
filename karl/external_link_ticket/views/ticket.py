@@ -65,23 +65,23 @@ def wrap_external_link_view(context, request):
     return HTTPFound(location = location)
 
 
-def authenticate_ticket(context, request):
+def authenticate_ticket_view(context, request):
     key = request.params.get('key', None)
-    external_url = request.params.get('extenal_url')
-    remote_addr = request.params.get('remote_addr')
+    external_url = request.params.get('external_url', None)
+    remote_addr = request.params.get('remote_addr', None)
 
     error = None
     if not key:
-        error = {'status': 'FAIL', 'message': 'No key was passed'}
+        error = {'status': 'FAIL', 'message': 'No key provided'}
     if not external_url:
-        error = {'status': 'FAIL', 'message': 'No external_url was passed'}
+        error = {'status': 'FAIL', 'message': 'No external_url provided'}
     if not remote_addr:
-        error = {'status': 'FAIL', 'message': 'No remote_addr was passed'}
+        error = {'status': 'FAIL', 'message': 'No remote_addr provided'}
     if error:
         xml_response = fail_xml_template % error
         return Response(xml_response)
 
-    ticket = get_ticket(key)
+    ticket = get_ticket(context, key)
     if not ticket:
         error = {'status': 'FAIL', 'message': 'No ticket matching key was found'}
         xml_response = fail_xml_template % error

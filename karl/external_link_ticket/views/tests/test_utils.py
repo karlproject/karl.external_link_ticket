@@ -1,25 +1,8 @@
-# Copyright (C) 2008-2009 Open Society Institute
-#               Thomas Moroz: tmoroz@sorosny.org
-#
-# This program is free software; you can redistribute it and/or modify it
-# under the terms of the GNU General Public License Version 2 as published
-# by the Free Software Foundation.  You may not use, modify or distribute
-# this program under any other version of the GNU General Public License.
-#
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-
-
 import unittest
 from zope.testing.cleanup import cleanUp
 
 from repoze.bfg import testing
+from karl.external_link_ticket.testing import DummyTicketContext
 
 class TestFindLinkTickets(unittest.TestCase):
     def setUp(self):
@@ -256,16 +239,3 @@ class TestExpireTicket(unittest.TestCase):
         result = self._callFUT(context, '123456')
         self.assertEqual(result, True)
         self.assertEqual(context['link_tickets'].get('123456',None), None)
-
-class DummyTicketContext(testing.DummyModel):
-    def __init__(self, **kw):
-        testing.DummyModel.__init__(self)
-        from datetime import datetime
-        self['link_tickets'] = testing.DummyModel()
-        ticket = testing.DummyModel()
-        ticket.email = kw.get('email', 'test@example.com')
-        ticket.remote_addr = kw.get('remote_addr', '192.168.1.1')
-        ticket.external_url = kw.get('external_url', 'http://example.com')
-        ticket.created = kw.get('created', datetime.now())
-        ticket.used = kw.get('used', None)
-        self['link_tickets']['123456'] = ticket
