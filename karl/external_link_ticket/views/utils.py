@@ -16,9 +16,13 @@
 # 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 
-import random
-import md5
 from datetime import datetime
+import random
+try:
+    from hashlib import md5
+except ImportError:
+    from md5 import new as md5
+
 from repoze.bfg.security import authenticated_userid
 from karl.utils import find_profiles
 from karl.utils import find_site
@@ -53,7 +57,7 @@ def find_link_tickets(context):
 
 def generate_ticket(context, email, remote_addr, external_url):
     # generate a random 32 character string
-    key = md5.new(str(random.random())).hexdigest()
+    key = md5(str(random.random())).hexdigest()
 
     ticket = dict(
         email = email,
