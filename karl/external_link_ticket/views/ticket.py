@@ -66,7 +66,7 @@ def wrap_external_link_view(context, request):
 
 
 def authenticate_ticket_view(context, request):
-    key = request.params.get('key', None)
+    key = request.params.get('ticket', None)
     external_url = request.params.get('external_url', None)
     remote_addr = request.params.get('remote_addr', None)
 

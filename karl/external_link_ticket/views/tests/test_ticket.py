@@ -144,7 +144,7 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         key = None
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
-            'key': None,
+            'ticket': key,
             'external_url': 'http://example.com',
             'remote_addr': '192.168.1.1',
         })
@@ -156,7 +156,7 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         from karl.external_link_ticket.views.ticket import fail_xml_template
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
-            'key': '123456',
+            'ticket': '123456',
             'remote_addr': '192.168.1.1',
         })
         response = self._callFUT(context, request)
@@ -168,7 +168,7 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         from karl.external_link_ticket.views.ticket import fail_xml_template
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
-            'key': '123456',
+            'ticket': '123456',
             'external_url': None,
             'remote_addr': '192.168.1.1',
         })
@@ -181,7 +181,7 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         from karl.external_link_ticket.views.ticket import fail_xml_template
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
-            'key': '123456',
+            'ticket': '123456',
             'external_url': 'http://example.com',
         })
         response = self._callFUT(context, request)
@@ -194,7 +194,7 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         key = '123456'
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
-            'key': '123456',
+            'ticket': key,
             'external_url': 'http://example.com',
             'remote_addr': None,
         })
@@ -207,7 +207,7 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         from karl.external_link_ticket.views.ticket import fail_xml_template
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
-            'key': '123456',
+            'ticket': '123456',
             'external_url': 'http://example.com',
             'remote_addr': '192.168.1.1',
         })
@@ -220,7 +220,7 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         from karl.external_link_ticket.views.ticket import success_xml_template
         context = DummyTicketContext()
         request = testing.DummyRequest(params={
-            'key': '123456',
+            'ticket': '123456',
             'external_url': 'http://example.com',
             'remote_addr': '192.168.1.1',
         })
