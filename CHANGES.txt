@@ -1,2 +1,26 @@
-No releases.
+karl.external_link_ticket package Changelog
+===========================================
+
+Unreleased
+----------
+
+- 
+
+osi-production-20090603 (2009-06-03)
+------------------------------------
+
+- Changed authenticate_ticket to be consistent with the existing client-side
+  code by accepting the key as the variable ticket.
+
+- Made authenticte_ticket view accessible to anonymous users.
+
+osi-production-20090531 (2009-05-31)
+------------------------------------
+
+- No changes to this package.
+
+osi-production-20090528 (2009-05-28)
+------------------------------------
+
+- Initial version rolled out to replace KARL2.
 
