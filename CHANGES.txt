@@ -1,6 +1,11 @@
 karl.external_link_ticket package Changelog
 ===========================================
 
+Unreleased
+----------
+
+- ...
+
 osi-production-20090610 (2009-06-10)
 ------------------------------------
 
