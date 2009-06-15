@@ -1,10 +1,10 @@
 karl.external_link_ticket package Changelog
 ===========================================
 
-Unreleased
-----------
+3.0 (2009-06-15)
+----------------
 
-- ...
+- Just updated version number and tagging scheme.
 
 osi-production-20090611 (2009-06-11)
 ------------------------------------
