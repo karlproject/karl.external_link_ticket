@@ -122,10 +122,11 @@ def validate_ticket(ticket, remote_addr, external_url):
     if ticket['external_url'] != external_url:
         return {'status': 'FAIL', 'message': 'The ticket was generated for a different external_url'}
 
+    # FIXME - commented out for now because VPN'ed users report two different IP's causing a failure
     # verify that the remote_addr is correct
-    remote_addr = remote_addr
-    if remote_addr != ticket['remote_addr']:
-        return {'status': 'FAIL', 'message': 'The ticket was generated for a different IP address'}
+    #remote_addr = remote_addr
+    #if remote_addr != ticket['remote_addr']:
+    #    return {'status': 'FAIL', 'message': 'The ticket was generated for a different IP address'}
 
     return {'status': 'SUCCESS', 'email': ticket['email']}
 
