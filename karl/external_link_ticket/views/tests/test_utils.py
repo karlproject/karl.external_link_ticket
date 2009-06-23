@@ -169,20 +169,21 @@ class TestValidateTicket(unittest.TestCase):
         self.assertEqual(result['status'], 'FAIL')
         self.assertEqual(result['message'], 'The ticket was already used')
 
-    def test_invalid_remote_addr(self):
-        from datetime import datetime
-        created = datetime.now()
-        external_url = 'http://example.com'
-        ticket = {
-            'email': 'test@example.com',
-            'remote_addr': '192.168.1.1',
-            'external_url': external_url,
-            'created': created,
-            'used': None,
-        }
-        result = self._callFUT(ticket, '192.168.1.2', external_url)
-        self.assertEqual(result['status'], 'FAIL')
-        self.assertEqual(result['message'], 'The ticket was generated for a different IP address')
+    # The remote_addr check is commented out in code since it caused issues with VPN'ed connections
+    #def test_invalid_remote_addr(self):
+    #    from datetime import datetime
+    #    created = datetime.now()
+    #    external_url = 'http://example.com'
+    #    ticket = {
+    #        'email': 'test@example.com',
+    #        'remote_addr': '192.168.1.1',
+    #        'external_url': external_url,
+    #        'created': created,
+    #        'used': None,
+    #    }
+    #    result = self._callFUT(ticket, '192.168.1.2', external_url)
+    #    self.assertEqual(result['status'], 'FAIL')
+    #    self.assertEqual(result['message'], 'The ticket was generated for a different IP address')
 
     def test_invalid_external_url(self):
         from datetime import datetime
