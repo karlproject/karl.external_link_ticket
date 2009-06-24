@@ -10,12 +10,12 @@
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-__version__ = '3.1-dev'
+__version__ = '3.1'
 
 import os
 
@@ -60,7 +60,7 @@ setup(name='karl.external_link_ticket',
       test_suite="nose.collector",
       #entry_points = """\
       #[console_scripts]
-      #remove_old_tickets = karl.external_link_ticket.scripts.remove_old_tickets:main      
+      #remove_old_tickets = karl.external_link_ticket.scripts.remove_old_tickets:main
       #"""
       )
 
