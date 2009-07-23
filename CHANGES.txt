@@ -1,6 +1,11 @@
 karl.external_link_ticket package Changelog
 ===========================================
 
+Unreleased
+----------
+
+- ...
+
 3.2 (2009-07-23)
 ----------------
 
