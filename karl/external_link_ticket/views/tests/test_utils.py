@@ -1,15 +1,14 @@
 import unittest
-from zope.testing.cleanup import cleanUp
 
 from repoze.bfg import testing
 from karl.external_link_ticket.testing import DummyTicketContext
 
 class TestFindLinkTickets(unittest.TestCase):
     def setUp(self):
-        cleanUp()
+        testing.setUp()
 
     def tearDown(self):
-        cleanUp()
+        testing.tearDown()
 
     def _callFUT(self, context):
         from karl.external_link_ticket.views.utils import find_link_tickets
@@ -31,10 +30,10 @@ class TestFindLinkTickets(unittest.TestCase):
 
 class TestGenerateTicket(unittest.TestCase):
     def setUp(self):
-        cleanUp()
+        testing.setUp()
 
     def tearDown(self):
-        cleanUp()
+        testing.tearDown()
 
     def _callFUT(self, context, email, remote_addr, external_url):
         from karl.external_link_ticket.views.utils import generate_ticket
@@ -48,10 +47,10 @@ class TestGenerateTicket(unittest.TestCase):
 
 class TestWriteTicket(unittest.TestCase):
     def setUp(self):
-        cleanUp()
+        testing.setUp()
 
     def tearDown(self):
-        cleanUp()    
+        testing.tearDown()
 
     def _callFUT(self, context, ticket, key):
         from karl.external_link_ticket.views.utils import write_ticket
@@ -77,10 +76,10 @@ class TestWriteTicket(unittest.TestCase):
 
 class TestGetTicket(unittest.TestCase):
     def setUp(self):
-        cleanUp()
-    
+        testing.setUp()
+
     def tearDown(self):
-        cleanUp()
+        testing.tearDown()
 
     def _callFUT(self, context, key):
         from karl.external_link_ticket.views.utils import get_ticket
@@ -109,10 +108,10 @@ class TestGetTicket(unittest.TestCase):
 
 class TestGetTicketAge(unittest.TestCase):
     def setUp(self):
-        cleanUp()
+        testing.setUp()
 
     def tearDown(self):
-        cleanUp()
+        testing.tearDown()
 
     def _callFUT(self, ticket):
         from karl.external_link_ticket.views.utils import get_ticket_age
@@ -120,7 +119,6 @@ class TestGetTicketAge(unittest.TestCase):
 
     def test_valid(self):
         from datetime import datetime
-        import time
         ticket = {'created': datetime.now()}
         result = self._callFUT(ticket)
         self.assertEqual(result, 0)
@@ -128,10 +126,10 @@ class TestGetTicketAge(unittest.TestCase):
 
 class TestValidateTicket(unittest.TestCase):
     def setUp(self):
-        cleanUp()
-    
+        testing.setUp()
+
     def tearDown(self):
-        cleanUp()
+        testing.tearDown()
 
     def _callFUT(self, ticket, remote_addr, external_url):
         from karl.external_link_ticket.views.utils import validate_ticket
@@ -221,10 +219,10 @@ class TestValidateTicket(unittest.TestCase):
 
 class TestExpireTicket(unittest.TestCase):
     def setUp(self):
-        cleanUp()
-    
+        testing.setUp()
+
     def tearDown(self):
-        cleanUp()
+        testing.tearDown()
 
     def _callFUT(self, context, key):
         from karl.external_link_ticket.views.utils import expire_ticket

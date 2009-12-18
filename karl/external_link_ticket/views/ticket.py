@@ -18,11 +18,10 @@
 
 from webob.exc import HTTPFound
 from webob import Response
+from repoze.bfg.exceptions import Forbidden
 from repoze.bfg.security import authenticated_userid
-from repoze.bfg.security import Unauthorized
 from karl.utils import find_profiles
 from karl.external_link_ticket.views.utils import generate_ticket
-from karl.external_link_ticket.views.utils import write_ticket
 from karl.external_link_ticket.views.utils import get_ticket
 from karl.external_link_ticket.views.utils import validate_ticket
 from karl.external_link_ticket.views.utils import expire_ticket
@@ -51,10 +50,10 @@ def wrap_external_link_view(context, request):
     profiles = find_profiles(context)
     userid = authenticated_userid(request)
     if not userid:
-        raise Unauthorized('You are not logged in')
+        raise Forbidden('You are not logged in')
     profile = profiles.get(userid)
     if not profile:
-        raise Unauthorized('No profile found for user %s' % userid)
+        raise Forbidden('No profile found for user %s' % userid)
     
     key = generate_ticket(context, profile.email, remote_addr, external_url)
 

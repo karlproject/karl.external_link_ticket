@@ -17,17 +17,16 @@
 
 
 import unittest
-from zope.testing.cleanup import cleanUp
 
 from repoze.bfg import testing
 from karl.external_link_ticket.testing import DummyTicketContext
 
 class WrapExternalLinkViewTests(unittest.TestCase):
     def setUp(self):
-        cleanUp()
+        testing.setUp()
 
     def tearDown(self):
-        cleanUp()
+        testing.tearDown()
 
     def _callFUT(self, context, request):
         from karl.external_link_ticket.views.ticket \
@@ -57,20 +56,20 @@ class WrapExternalLinkViewTests(unittest.TestCase):
             self.fail('Expected a ValueError')
 
     def test_invalid_unauthenticated(self):
-        from repoze.bfg.security import Unauthorized
+        from repoze.bfg.exceptions import Forbidden
         context = testing.DummyModel()
         context['profiles'] = testing.DummyModel()
         request = testing.DummyRequest(
                             params={'external_url': 'http://example.com'})
         try:
             response = self._callFUT(context, request)
-        except Unauthorized, exception:
+        except Forbidden, exception:
             self.assertEqual(str(exception), 'You are not logged in')
         else:
             self.fail('Expected Unauthorized exception')
 
     def test_invalid_noprofile(self):
-        from repoze.bfg.security import Unauthorized
+        from repoze.bfg.exceptions import Forbidden
         testing.registerDummySecurityPolicy(userid='testuser')
         context = testing.DummyModel()
         context['profiles'] = testing.DummyModel()
@@ -78,7 +77,7 @@ class WrapExternalLinkViewTests(unittest.TestCase):
                             params={'external_url': 'http://example.com'})
         try:
             response = self._callFUT(context, request)
-        except Unauthorized, exception:
+        except Forbidden, exception:
             self.assertEqual(str(exception),
                              'No profile found for user testuser')
         else:
@@ -118,10 +117,10 @@ class WrapExternalLinkViewTests(unittest.TestCase):
 
 class AuthenticateTicketViewTests(unittest.TestCase):
     def setUp(self):
-        cleanUp()
+        testing.setUp()
 
     def tearDown(self):
-        cleanUp()
+        testing.tearDown()
 
     def _callFUT(self, context, request):
         from karl.external_link_ticket.views.ticket \

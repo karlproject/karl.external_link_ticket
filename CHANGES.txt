@@ -2,9 +2,9 @@ karl.external_link_ticket package Changelog
 ===========================================
 
 Unreleased
-----------
+-----------
 
-- ...
+- Bring up to date with bfg 1.1a5 (merge formish branch).
 
 3.2 (2009-07-23)
 ----------------
