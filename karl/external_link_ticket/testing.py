@@ -1,4 +1,4 @@
-from repoze.bfg import testing
+from pyramid import testing
 
 class DummyTicketContext(testing.DummyModel):
     def __init__(self, **kw):

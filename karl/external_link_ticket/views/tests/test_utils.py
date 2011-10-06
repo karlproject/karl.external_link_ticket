@@ -1,6 +1,6 @@
 import unittest
 
-from repoze.bfg import testing
+from pyramid import testing
 from karl.external_link_ticket.testing import DummyTicketContext
 
 class TestFindLinkTickets(unittest.TestCase):

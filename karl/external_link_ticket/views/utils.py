@@ -23,7 +23,7 @@ try:
 except ImportError:
     from md5 import new as md5
 
-from repoze.bfg.security import authenticated_userid
+from pyramid.security import authenticated_userid
 from karl.utils import find_profiles
 from karl.utils import find_site
 from karl.external_link_ticket.models.ticket import LinkTickets

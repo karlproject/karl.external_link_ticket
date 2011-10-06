@@ -18,7 +18,7 @@
 
 import unittest
 
-from repoze.bfg import testing
+from pyramid import testing
 from karl.external_link_ticket.testing import DummyTicketContext
 
 class WrapExternalLinkViewTests(unittest.TestCase):
@@ -56,7 +56,7 @@ class WrapExternalLinkViewTests(unittest.TestCase):
             self.fail('Expected a ValueError')
 
     def test_invalid_unauthenticated(self):
-        from repoze.bfg.exceptions import Forbidden
+        from pyramid.exceptions import Forbidden
         context = testing.DummyModel()
         context['profiles'] = testing.DummyModel()
         request = testing.DummyRequest(
@@ -69,7 +69,7 @@ class WrapExternalLinkViewTests(unittest.TestCase):
             self.fail('Expected Unauthorized exception')
 
     def test_invalid_noprofile(self):
-        from repoze.bfg.exceptions import Forbidden
+        from pyramid.exceptions import Forbidden
         testing.registerDummySecurityPolicy(userid='testuser')
         context = testing.DummyModel()
         context['profiles'] = testing.DummyModel()

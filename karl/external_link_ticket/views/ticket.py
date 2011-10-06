@@ -18,8 +18,8 @@
 
 from webob.exc import HTTPFound
 from webob import Response
-from repoze.bfg.exceptions import Forbidden
-from repoze.bfg.security import authenticated_userid
+from pyramid.exceptions import Forbidden
+from pyramid.security import authenticated_userid
 from karl.utils import find_profiles
 from karl.external_link_ticket.views.utils import generate_ticket
 from karl.external_link_ticket.views.utils import get_ticket
