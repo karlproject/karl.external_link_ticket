@@ -1,12 +1,15 @@
 karl.external_link_ticket package Changelog
 ===========================================
 
+3.4 (2011-10-27)
+----------------
+
+- Pyramid updates
+
 3.3 (2011-10-27)
 ----------------
 
 - Bring up to date with bfg 1.1a5 (merge formish branch).
-
-- Pyramid updates
 
 3.2 (2009-07-23)
 ----------------
