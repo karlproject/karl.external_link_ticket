@@ -30,6 +30,8 @@ class LinkTicket(Persistent):
     implements(ILinkTicket)
 
     def __init__(self, **kw):
+        self.first_name = kw.get('first_name')
+        self.last_name = kw.get('last_name')
         self.email = kw.get('email')
         self.external_url = kw.get('external_url')
         self.remote_addr = kw.get('remote_addr')

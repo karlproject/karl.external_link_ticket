@@ -35,13 +35,16 @@ class TestGenerateTicket(unittest.TestCase):
     def tearDown(self):
         testing.tearDown()
 
-    def _callFUT(self, context, email, remote_addr, external_url):
+    def _callFUT(self, context, firstname, lastname, email, remote_addr,
+                 external_url):
         from karl.external_link_ticket.views.utils import generate_ticket
-        return generate_ticket(context, email, remote_addr, external_url)
+        return generate_ticket(context, firstname, lastname,
+                               email, remote_addr, external_url)
 
     def test_valid(self):
         context = testing.DummyModel()
-        key = self._callFUT(context, 'test@example.com', '192.168.1.1', 'http://example.com')
+        key = self._callFUT(context, 'firstname', 'lastname',
+                            'test@example.com', '192.168.1.1', 'http://example.com')
         self.assertEqual(len(key), 32)
 
 

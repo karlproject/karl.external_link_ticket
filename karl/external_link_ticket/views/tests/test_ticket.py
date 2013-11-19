@@ -88,6 +88,8 @@ class WrapExternalLinkViewTests(unittest.TestCase):
         context = testing.DummyModel()
         context['profiles'] = testing.DummyModel()
         profile = testing.DummyModel()
+        profile.firstname = 'Firstname'
+        profile.lastname = 'Lastname'
         profile.email = 'test@example.com'
         context['profiles']['testuser'] = profile
         request = testing.DummyRequest(
@@ -103,6 +105,8 @@ class WrapExternalLinkViewTests(unittest.TestCase):
         context = testing.DummyModel()
         context['profiles'] = testing.DummyModel()
         profile = testing.DummyModel()
+        profile.firstname = 'Firstname'
+        profile.lastname = 'Lastname'
         profile.email = 'test@example.com'
         context['profiles']['testuser'] = profile
         request = testing.DummyRequest(

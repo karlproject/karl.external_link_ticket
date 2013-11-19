@@ -18,6 +18,7 @@
 
 from datetime import datetime
 import random
+
 try:
     from hashlib import md5
 except ImportError:
@@ -46,6 +47,7 @@ fail_xml_template = """<?xml version="1.0"?>
 # the number of seconds a ticket should stay active
 ticket_ttl = 60
 
+
 def find_link_tickets(context):
     site = find_site(context)
     link_tickets = site.get('link_tickets', None)
@@ -55,19 +57,22 @@ def find_link_tickets(context):
     return link_tickets
 
 
-def generate_ticket(context, email, remote_addr, external_url):
+def generate_ticket(context, first_name, last_name, email, remote_addr,
+                    external_url):
     # generate a random 32 character string
     key = md5(str(random.random())).hexdigest()
 
     ticket = dict(
-        email = email,
-        remote_addr = remote_addr,
-        external_url = external_url,
+        first_name=first_name,
+        last_name=last_name,
+        email=email,
+        remote_addr=remote_addr,
+        external_url=external_url,
     )
     write_ticket(context, ticket, key)
     return key
 
-    
+
 def write_ticket(context, ticket, key):
     link_tickets = find_link_tickets(context)
     link_ticket = LinkTicket(**ticket)
@@ -93,26 +98,32 @@ def get_ticket(context, key):
         return None
 
     ticket = dict(
-        email = link_ticket.email,
-        remote_addr = link_ticket.remote_addr,
-        external_url = link_ticket.external_url,
-        created = link_ticket.created,
-        used = link_ticket.used,
+        email=link_ticket.email,
+        remote_addr=link_ticket.remote_addr,
+        external_url=link_ticket.external_url,
+        created=link_ticket.created,
+        used=link_ticket.used,
+        first_name=link_ticket.first_name,
+        last_name=link_ticket.last_name,
     )
     return ticket
+
 
 def get_ticket_age(ticket):
     age = datetime.now() - ticket['created']
     return age.seconds
-    
+
+
 def validate_ticket(ticket, remote_addr, external_url):
     # Verify that the ticket exists
     if not ticket:
-        return {'status': 'FAIL', 'message': 'No ticket found with key %s' % key}
+        return {'status': 'FAIL',
+                'message': 'No ticket found with key %s' % key}
 
     # verify the ticket has not been used
     if ticket['used']:
-        return {'status': 'FAIL', 'message': 'The ticket was already used'}
+        return {'status': 'FAIL',
+                'message': 'The ticket was already used'}
 
     # verify that the ticket is not more than a minute old
     if get_ticket_age(ticket) > ticket_ttl:
@@ -120,7 +131,8 @@ def validate_ticket(ticket, remote_addr, external_url):
 
     # verify that the ticket was for the correct external_url
     if ticket['external_url'] != external_url:
-        return {'status': 'FAIL', 'message': 'The ticket was generated for a different external_url'}
+        return {'status': 'FAIL',
+                'message': 'The ticket was generated for a different external_url'}
 
     # FIXME - commented out for now because VPN'ed users report two different IP's causing a failure
     # verify that the remote_addr is correct
@@ -128,13 +140,15 @@ def validate_ticket(ticket, remote_addr, external_url):
     #if remote_addr != ticket['remote_addr']:
     #    return {'status': 'FAIL', 'message': 'The ticket was generated for a different IP address'}
 
-    return {'status': 'SUCCESS', 'email': ticket['email']}
+    return {'status': 'SUCCESS', 'email': ticket['email'],
+            'first_name': ticket['first_name'],
+            'last_name': ticket['last_name']}
 
 
 def expire_ticket(context, key):
     link_tickets = find_link_tickets(context)
     if key in link_tickets.keys():
-        del(link_tickets[key])
+        del (link_tickets[key])
         return True
     return False
 

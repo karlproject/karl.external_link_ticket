@@ -30,6 +30,8 @@ success_xml_template = """<?xml version="1.0"?>
 <AuthenticateTicketResponse>
     <Status>%(status)s</Status>
     <Email>%(email)s</Email>
+    <FirstName>%(first_name)s</FirstName>
+    <LastName>%(last_name)s</LastName>
 </AuthenticateTicketResponse>
 """
 
@@ -54,8 +56,11 @@ def wrap_external_link_view(context, request):
     profile = profiles.get(userid)
     if not profile:
         raise Forbidden('No profile found for user %s' % userid)
-    
-    key = generate_ticket(context, profile.email, remote_addr, external_url)
+
+    first_name = profile.firstname
+    last_name = profile.lastname
+    key = generate_ticket(context, first_name, last_name, profile.email,
+                          remote_addr, external_url)
 
     if external_url.find('?') != -1:
         location = '%s&karl_authentication_ticket=%s' % (external_url, key)
@@ -85,8 +90,8 @@ def authenticate_ticket_view(context, request):
         error = {'status': 'FAIL', 'message': 'No ticket matching key was found'}
         xml_response = fail_xml_template % error
         return Response(xml_response)
-    
-    validation_result = validate_ticket(ticket, remote_addr, external_url)    
+
+    validation_result = validate_ticket(ticket, remote_addr, external_url)
     if validation_result['status'] == 'SUCCESS':
         expire_ticket(context, key)
         xml_response = success_xml_template % validation_result
