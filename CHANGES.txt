@@ -1,8 +1,8 @@
 karl.external_link_ticket package Changelog
 ===========================================
 
-Unreleased
-----------
+3.5 (2013-11-22)
+----------------
 
 - Help with the ZenDesk API changes by sending first and last name in
   the XML response to ``authenticate_ticket`` POST requests
