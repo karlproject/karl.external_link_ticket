@@ -21,6 +21,7 @@ import unittest
 from pyramid import testing
 from karl.external_link_ticket.testing import DummyTicketContext
 
+
 class WrapExternalLinkViewTests(unittest.TestCase):
     def setUp(self):
         testing.setUp()
@@ -31,6 +32,7 @@ class WrapExternalLinkViewTests(unittest.TestCase):
     def _callFUT(self, context, request):
         from karl.external_link_ticket.views.ticket \
             import wrap_external_link_view
+
         return wrap_external_link_view(context, request)
 
     def test_invalid_no_external_url(self):
@@ -57,10 +59,11 @@ class WrapExternalLinkViewTests(unittest.TestCase):
 
     def test_invalid_unauthenticated(self):
         from pyramid.exceptions import Forbidden
+
         context = testing.DummyModel()
         context['profiles'] = testing.DummyModel()
         request = testing.DummyRequest(
-                            params={'external_url': 'http://example.com'})
+            params={'external_url': 'http://example.com'})
         try:
             response = self._callFUT(context, request)
         except Forbidden, exception:
@@ -70,11 +73,12 @@ class WrapExternalLinkViewTests(unittest.TestCase):
 
     def test_invalid_noprofile(self):
         from pyramid.exceptions import Forbidden
+
         testing.registerDummySecurityPolicy(userid='testuser')
         context = testing.DummyModel()
         context['profiles'] = testing.DummyModel()
         request = testing.DummyRequest(
-                            params={'external_url': 'http://example.com'})
+            params={'external_url': 'http://example.com'})
         try:
             response = self._callFUT(context, request)
         except Forbidden, exception:
@@ -93,11 +97,12 @@ class WrapExternalLinkViewTests(unittest.TestCase):
         profile.email = 'test@example.com'
         context['profiles']['testuser'] = profile
         request = testing.DummyRequest(
-                        params={'external_url': 'http://example.com'})
+            params={'external_url': 'http://example.com'})
         response = self._callFUT(context, request)
         location_parts = response.location.split('?')
         self.assertEqual(location_parts[0], 'http://example.com')
-        self.assertEqual(location_parts[1][:27], 'karl_authentication_ticket=')
+        self.assertEqual(location_parts[1][:27],
+                         'karl_authentication_ticket=')
         self.assertEqual(len(location_parts[1][27:]), 32)
 
     def test_valid_with_get_args(self):
@@ -110,14 +115,17 @@ class WrapExternalLinkViewTests(unittest.TestCase):
         profile.email = 'test@example.com'
         context['profiles']['testuser'] = profile
         request = testing.DummyRequest(
-                        params={'external_url':
-                                    'http://example.com?arg1=val1&arg2=val2'})
+            params={'external_url':
+                        'http://example.com?arg1=val1&arg2=val2'})
         response = self._callFUT(context, request)
         location_parts = response.location.split('&')
-        self.assertEqual(location_parts[0], 'http://example.com?arg1=val1')
+        self.assertEqual(location_parts[0],
+                         'http://example.com?arg1=val1')
         self.assertEqual(location_parts[1], 'arg2=val2')
-        self.assertEqual(location_parts[2][:27], 'karl_authentication_ticket=')
+        self.assertEqual(location_parts[2][:27],
+                         'karl_authentication_ticket=')
         self.assertEqual(len(location_parts[2][27:]), 32)
+
 
 class AuthenticateTicketViewTests(unittest.TestCase):
     def setUp(self):
@@ -129,10 +137,12 @@ class AuthenticateTicketViewTests(unittest.TestCase):
     def _callFUT(self, context, request):
         from karl.external_link_ticket.views.ticket \
             import authenticate_ticket_view
+
         return authenticate_ticket_view(context, request)
 
     def test_invalid_no_key(self):
         from karl.external_link_ticket.views.ticket import fail_xml_template
+
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
             'external_url': 'http://example.com',
@@ -140,10 +150,12 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         })
         response = self._callFUT(context, request)
         expected_status = {'status': 'FAIL', 'message': 'No key provided'}
-        self.assertEqual(response.body, fail_xml_template % expected_status)
+        self.assertEqual(response.body,
+                         fail_xml_template % expected_status)
 
     def test_invalid_blank_key(self):
         from karl.external_link_ticket.views.ticket import fail_xml_template
+
         key = None
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
@@ -153,10 +165,12 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         })
         response = self._callFUT(context, request)
         expected_status = {'status': 'FAIL', 'message': 'No key provided'}
-        self.assertEqual(response.body, fail_xml_template % expected_status)
+        self.assertEqual(response.body,
+                         fail_xml_template % expected_status)
 
     def test_invalid_no_external_url(self):
         from karl.external_link_ticket.views.ticket import fail_xml_template
+
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
             'ticket': '123456',
@@ -165,10 +179,12 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         response = self._callFUT(context, request)
         expected_status = {'status': 'FAIL',
                            'message': 'No external_url provided'}
-        self.assertEqual(response.body, fail_xml_template % expected_status)
+        self.assertEqual(response.body,
+                         fail_xml_template % expected_status)
 
     def test_invalid_blank_external_url(self):
         from karl.external_link_ticket.views.ticket import fail_xml_template
+
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
             'ticket': '123456',
@@ -178,10 +194,12 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         response = self._callFUT(context, request)
         expected_status = {'status': 'FAIL',
                            'message': 'No external_url provided'}
-        self.assertEqual(response.body, fail_xml_template % expected_status)
+        self.assertEqual(response.body,
+                         fail_xml_template % expected_status)
 
     def test_invalid_no_remote_addr(self):
         from karl.external_link_ticket.views.ticket import fail_xml_template
+
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
             'ticket': '123456',
@@ -190,10 +208,12 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         response = self._callFUT(context, request)
         expected_status = {'status': 'FAIL',
                            'message': 'No remote_addr provided'}
-        self.assertEqual(response.body, fail_xml_template % expected_status)
+        self.assertEqual(response.body,
+                         fail_xml_template % expected_status)
 
     def test_invalid_blank_remote_addr(self):
         from karl.external_link_ticket.views.ticket import fail_xml_template
+
         key = '123456'
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
@@ -204,10 +224,12 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         response = self._callFUT(context, request)
         expected_status = {'status': 'FAIL',
                            'message': 'No remote_addr provided'}
-        self.assertEqual(response.body, fail_xml_template % expected_status)
+        self.assertEqual(response.body,
+                         fail_xml_template % expected_status)
 
     def test_invalid_key(self):
         from karl.external_link_ticket.views.ticket import fail_xml_template
+
         context = testing.DummyModel()
         request = testing.DummyRequest(params={
             'ticket': '123456',
@@ -217,10 +239,12 @@ class AuthenticateTicketViewTests(unittest.TestCase):
         response = self._callFUT(context, request)
         expected_status = {'status': 'FAIL',
                            'message': 'No ticket matching key was found'}
-        self.assertEqual(response.body, fail_xml_template % expected_status)
+        self.assertEqual(response.body,
+                         fail_xml_template % expected_status)
 
     def test_valid(self):
         from karl.external_link_ticket.views.ticket import success_xml_template
+
         context = DummyTicketContext()
         request = testing.DummyRequest(params={
             'ticket': '123456',
@@ -228,5 +252,9 @@ class AuthenticateTicketViewTests(unittest.TestCase):
             'remote_addr': '192.168.1.1',
         })
         response = self._callFUT(context, request)
-        expected_status = {'status': 'SUCCESS', 'email': 'test@example.com'}
-        self.assertEqual(response.body, success_xml_template % expected_status)
+        expected_status = {'status': 'SUCCESS',
+                           'email': 'test@example.com',
+                           'first_name': 'First',
+                           'last_name': 'Last'}
+        self.assertEqual(response.body,
+                         success_xml_template % expected_status)

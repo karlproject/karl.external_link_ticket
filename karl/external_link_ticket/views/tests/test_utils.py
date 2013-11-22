@@ -98,7 +98,9 @@ class TestGetTicket(unittest.TestCase):
     def test_valid(self):
         from datetime import datetime
         created = datetime.now()
-        context = DummyTicketContext(**{'created': created})
+        context = DummyTicketContext(**{'created': created,
+                                        'first_name': 'First',
+                                        'last_name': 'Last'})
 
         key = '123456'
         result = self._callFUT(context, key)
@@ -209,6 +211,8 @@ class TestValidateTicket(unittest.TestCase):
         remote_addr = '192.168.1.1'
         external_url = 'http://example.com'
         ticket = {
+            'first_name': 'First',
+            'last_name': 'Last',
             'email': 'test@example.com',
             'remote_addr': remote_addr,
             'external_url': external_url,
